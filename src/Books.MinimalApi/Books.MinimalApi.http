@@ -1,0 +1,50 @@
+@Books.MinimalApi_HostAddress = https://localhost:7224
+@token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1bmlxdWVfbmFtZSI6Im1lbG55Iiwic3ViIjoibWVsbnkiLCJqdGkiOiJlNjAxNTJkNiIsImF1ZCI6Im1lbnUtYXBpIiwibmJmIjoxNzEwNjkzMTgyLCJleHAiOjE3MTg2NDE5ODIsImlhdCI6MTcxMDY5MzE4MywiaXNzIjoiZG90bmV0LXVzZXItand0cyJ9.xhLOzfL9PeLzkY3SMnjWao4T5UWL6byWVNunGhJhbok
+@adminToken = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1bmlxdWVfbmFtZSI6Im1lbG55Iiwic3ViIjoibWVsbnkiLCJqdGkiOiJiY2JhN2ZjOSIsInJvbGUiOiJhZG1pbiIsImNvdW50cnkiOiJVa3JhaW5lIiwiYXVkIjoibWVudS1hcGkiLCJuYmYiOjE3MTA2OTQzMzcsImV4cCI6MTcxODY0MzEzNywiaWF0IjoxNzEwNjk0MzM3LCJpc3MiOiJkb3RuZXQtdXNlci1qd3RzIn0.eDWgSLYpDOfRfXOpExtZEB8d3te2TGPdEwTGAQkqv0w
+@countryId=23af8736-f7ef-48a1-8eda-4a0973881398
+
+GET {{Books.MinimalApi_HostAddress}}/books/
+
+###
+
+GET {{Books.MinimalApi_HostAddress}}/countries
+Authorization: Bearer {{token}}
+
+###
+
+POST {{Books.MinimalApi_HostAddress}}/countries
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "name": "test2"
+}
+
+###
+GET {{Books.MinimalApi_HostAddress}}/countries/{{countryId}}
+Authorization: Bearer {{adminToken}}
+
+###
+
+PUT {{Books.MinimalApi_HostAddress}}/countries/{{countryId}}
+Authorization: Bearer {{adminToken}}
+Content-Type: application/json
+
+{
+  "name": "test4"
+}
+###
+
+DELETE {{Books.MinimalApi_HostAddress}}/countries/{{countryId}}
+Authorization: Bearer {{adminToken}}
+###
+
+GET {{Books.MinimalApi_HostAddress}}/countries/authors/
+Authorization: Bearer {{adminToken}}
+###
+
+@countryName=Afghanistan
+GET {{Books.MinimalApi_HostAddress}}/countries/{countryName}
+Authorization: Bearer {{adminToken}}
+
+###

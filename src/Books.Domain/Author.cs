@@ -22,7 +22,7 @@ public sealed class Author : Entity
 
     public Country Country { get; private set; }
 
-    public IReadOnlyCollection<Book> Books => _books;
+    public IReadOnlyCollection<Book> Books => _books.ToList();
 
     public static Author Create(FirstName firstName, LastName lastName, Guid countryId)
     {

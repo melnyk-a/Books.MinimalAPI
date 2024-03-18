@@ -22,5 +22,8 @@ public class AuthorConfiguration : IEntityTypeConfiguration<Author>
             .WithMany(country => country.Authors)
             .HasForeignKey(author => author.CountryId)
             .IsRequired();
+
+        var navigation = builder.Metadata.FindNavigation(nameof(Author.Books));
+        navigation.SetPropertyAccessMode(PropertyAccessMode.Field);
     }
 }

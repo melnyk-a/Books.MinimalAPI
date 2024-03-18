@@ -16,5 +16,8 @@ public class CountryConfiguration : IEntityTypeConfiguration<Country>
             .HasConversion(country => country.Value, value => new Name(value));
 
         builder.HasIndex(user => user.Name).IsUnique();
+
+        var navigation = builder.Metadata.FindNavigation(nameof(Country.Authors));
+        navigation.SetPropertyAccessMode(PropertyAccessMode.Field);
     }
 }

@@ -5,7 +5,8 @@ using Books.Domain.Abstractions.Persistence;
 
 namespace Books.Application.Countries.CreateCountry;
 
-internal sealed class CreateCountryCommandHandler : ICommandHandler<CreateCountryCommand, Guid>
+internal sealed class CreateCountryCommandHandler :
+    ICommandHandler<CreateCountryCommand, Guid>
 {
     private readonly ICountryRepository _repository;
     private readonly IUnitOfWork _unitOfWork;
@@ -17,9 +18,17 @@ internal sealed class CreateCountryCommandHandler : ICommandHandler<CreateCountr
         _repository = repository;
         _unitOfWork = unitOfWork;
     }
-    public async Task<Result<Guid>> Handle(CreateCountryCommand request, CancellationToken cancellationToken)
+    public async Task<Result<Guid>> Handle(CreateCountryCommand request,
+        CancellationToken cancellationToken)
     {
-        var country = Country.Create(new Name(request.CountryName));
+        var country = await _repository.GetByNameAsync(request.CountryName, cancellationToken);
+
+        if (country is not null)
+        {
+            return Result.Failure<Guid>(CountryErrors.AlreadyExist);
+        }
+
+        country = Country.Create(new Name(request.CountryName));
         _repository.Add(country);
 
         await _unitOfWork.SaveChangesAsync(cancellationToken);

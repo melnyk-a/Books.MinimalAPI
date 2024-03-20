@@ -1,14 +1,15 @@
 using Books.Application;
 using Books.Infrastructure;
 using Books.MinimalApi;
-using Books.MinimalApi.Extensions;
+using Books.MinimalApi.Endpoints.Internal;
+using Books.MinimalApi.Middlewares;
+using FluentValidation;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddApplicationServices();
 builder.Services.AddPersistenceServices(builder.Configuration);
-builder.Services.AddProblemDetails();
 
 // AuthNZ
 builder.Services
@@ -49,15 +50,17 @@ builder.Services.AddSwaggerGen(options =>
     });
 });
 
+builder.Services.AddEndpoints<IApiMarker>(builder.Configuration);
+builder.Services.AddValidatorsFromAssemblyContaining<IApiMarker>();
+
 var app = builder.Build();
 
 app.SeedData();
 
 // Configure the HTTP request pipeline.
-
 if (app.Environment.IsDevelopment())
 {
-    app.UseExceptionHandler();
+    //app.UseExceptionHandler();
 
     app.UseSwagger();
     app.UseSwaggerUI();
@@ -77,10 +80,11 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
+app.UseMiddleware<ExceptionHandlingMiddleware>();
+
 app.UseAuthentication();
 app.UseAuthorization();
 
-app.RegisterCountryEndpoints();
-app.RegisterBooksEndpoints();
+app.UseEndpoints<IApiMarker>();
 
 app.Run();

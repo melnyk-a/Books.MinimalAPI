@@ -27,6 +27,12 @@ internal sealed class UpdateCountryCommandHandler : ICommandHandler<UpdateCountr
             return Result.Failure<Guid>(CountryErrors.NotFound);
         }
 
+        var countryWithSameName = await _repository.GetByNameAsync(request.CountryName, cancellationToken);
+        if (countryWithSameName is not null)
+        {
+            return Result.Failure<Guid>(CountryErrors.AlreadyExist);
+        }
+
         country.UpdateName(new Name(request.CountryName));
 
         await _unitOfWork.SaveChangesAsync(cancellationToken);

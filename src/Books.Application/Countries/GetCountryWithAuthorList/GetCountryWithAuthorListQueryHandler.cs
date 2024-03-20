@@ -19,10 +19,6 @@ internal sealed class GetCountryWithAuthorListQueryHandler
     public async Task<Result<IReadOnlyList<CountryWithAuthorResponse>>> Handle(GetCountryWithAuthorListQuery request, CancellationToken cancellationToken)
     {
         var countries = await _repository.ListAllAsync();
-        if (countries == null)
-        {
-            return Result.Failure<IReadOnlyList<CountryWithAuthorResponse>>(CountryErrors.NotFound);
-        }
 
         return countries.Select(country => new CountryWithAuthorResponse()
         {

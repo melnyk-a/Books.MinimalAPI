@@ -14,6 +14,6 @@ public static class SeedDataExtensions
         context.Database.EnsureDeleted();
         context.Database.Migrate();
 
-        context.Seed();
+        //context.Seed();
     }
 }

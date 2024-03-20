@@ -14,12 +14,15 @@ public class CountryLockedFilter : IEndpointFilter
         EndpointFilterDelegate next)
     {
         Guid requestCountyId;
-        // TODO: Do we need this check?
-        if (context.HttpContext.Request.Method == "PUT" ||
-            context.HttpContext.Request.Method == "DELETE" ||
+        // TODO: Not flexible
+        if (context.HttpContext.Request.Method == "DELETE" ||
             context.HttpContext.Request.Method == "GET")
         {
             requestCountyId = context.GetArgument<Guid>(1);
+        }
+        else if (context.HttpContext.Request.Method == "PUT")
+        {
+            requestCountyId = context.GetArgument<Guid>(2);
         }
         else
         {

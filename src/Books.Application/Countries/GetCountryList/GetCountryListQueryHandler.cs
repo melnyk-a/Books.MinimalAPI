@@ -18,10 +18,15 @@ internal sealed class GetCountryListQueryHandler
 
     public async Task<Result<IReadOnlyList<CountryResponse>>> Handle(GetCountryListQuery request, CancellationToken cancellationToken)
     {
-        var countries = await _repository.ListAllAsync();
-        if (countries == null)
+        IReadOnlyList<Country> countries;
+        var name = request.CountryName;
+        if (!string.IsNullOrEmpty(name))
         {
-            return Result.Failure<IReadOnlyList<CountryResponse>>(CountryErrors.NotFound);
+            countries = await _repository.ListByNameAsync(request.CountryName!, cancellationToken);
+        }
+        else
+        {
+            countries = await _repository.ListAllAsync(cancellationToken);
         }
 
         return countries.Select(country => new CountryResponse()

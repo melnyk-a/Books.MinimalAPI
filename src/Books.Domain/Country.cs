@@ -14,5 +14,5 @@ public sealed class Country : Entity
     public IReadOnlyCollection<Author> Authors => _authors.ToList();
 
     public void UpdateName(Name name) => Name = name;
-    public static Country Create(Name name) => new Country(Guid.NewGuid(), name);
+    public static Country Create(Name name) => new(Guid.NewGuid(), name);
 }

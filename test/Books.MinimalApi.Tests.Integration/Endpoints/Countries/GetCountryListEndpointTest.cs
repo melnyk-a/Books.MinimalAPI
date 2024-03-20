@@ -1,9 +1,6 @@
 ﻿using Books.Application.Countries.GetCountryList;
 using Books.Domain;
 using Books.Infrastructure;
-using FluentAssertions;
-using FluentAssertions.Execution;
-using System.Net;
 
 namespace Books.MinimalApi.Tests.Integration.Endpoints.Countries;
 

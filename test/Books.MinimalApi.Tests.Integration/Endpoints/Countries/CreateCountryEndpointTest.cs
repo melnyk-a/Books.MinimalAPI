@@ -1,12 +1,4 @@
-﻿using Books.Domain;
-using Books.Infrastructure;
-using Books.MinimalApi.Endpoints.Countries;
-using FluentAssertions;
-using FluentAssertions.Execution;
-using Microsoft.AspNetCore.Mvc;
-using System.Net;
-
-namespace Books.MinimalApi.Tests.Integration.Endpoints.Countries;
+﻿namespace Books.MinimalApi.Tests.Integration.Endpoints.Countries;
 
 [Collection("Database collection")]
 public class CreateCountryEndpointTest : IAsyncLifetime

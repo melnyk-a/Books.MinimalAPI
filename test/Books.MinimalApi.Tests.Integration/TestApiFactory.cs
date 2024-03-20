@@ -1,12 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc.Testing;
-using Books.Infrastructure;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.DependencyInjection.Extensions;
-using Microsoft.AspNetCore.TestHost;
+﻿using Books.MinimalApi.EndpointFilters;
 using WebMotions.Fake.Authentication.JwtBearer;
-using Moq;
-using Microsoft.Extensions.Logging.Abstractions;
-using Books.MinimalApi.EndpointFilters;
 
 namespace Books.MinimalApi.Tests.Integration;
 public class TestApiFactory : WebApplicationFactory<IApiMarker>
